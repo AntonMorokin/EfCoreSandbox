@@ -1,0 +1,1 @@
+This is the Entity Framework Core repository for some tests, examples, proof-of-conepts etc.
