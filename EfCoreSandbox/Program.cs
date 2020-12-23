@@ -1,5 +1,4 @@
 ﻿using EfCoreSandbox.EF;
-using Microsoft.Extensions.Configuration;
 
 namespace EfCoreSandbox
 {
@@ -7,13 +6,9 @@ namespace EfCoreSandbox
     {
         static void Main(string[] args)
         {
-            IConfiguration config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
+            var factory = new DatabaseContextFactory();
 
-            string connectionString = config["connectionStrings:postgreSql"];
-
-            using (var context = new DatabaseContext(connectionString))
+            using (var context = factory.CreateDbContext(args))
             {
 
             }

@@ -1,6 +1,5 @@
 ﻿using EfCoreSandbox.Model;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 
 namespace EfCoreSandbox.EF
@@ -27,7 +26,7 @@ namespace EfCoreSandbox.EF
         {
             modelBuilder.Entity<Account>()
                 .Property(a => a.OpeningDate)
-                .HasDefaultValue(DateTime.Now);
+                .HasDefaultValueSql("now()");
 
             modelBuilder.Entity<Account>()
                 .HasIndex(a => a.AccountNumber)
