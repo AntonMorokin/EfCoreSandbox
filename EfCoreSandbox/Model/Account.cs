@@ -7,7 +7,7 @@ namespace EfCoreSandbox.Model
     internal class Account
     {
         [Required, Key]
-        public int AccountId { get; set; }
+        public int AccountId { get; private set; }
 
         [Required]
         public string AccountNumber { get; set; }

@@ -6,7 +6,7 @@ namespace EfCoreSandbox.Model
     internal sealed class Client
     {
         [Required, Key]
-        public int ClientId { get; set; }
+        public int ClientId { get; private set; }
 
         [Required]
         public string FullName { get; set; }

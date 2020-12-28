@@ -1,6 +1,5 @@
 ﻿using EfCoreSandbox.Model;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace EfCoreSandbox.EF
 {
