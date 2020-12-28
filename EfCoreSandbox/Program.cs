@@ -22,26 +22,18 @@ namespace EfCoreSandbox
             {
                 if (args.Any(a => a == "init"))
                 {
-                    await InitializeAsync(context);
+                    Initialize(context);
                 }
 
-                var accountInYena = context.Accounts
-                    .Include(a => a.Owner)
-                    .ThenInclude(c => c.Accounts)
-                    .Where(a => a.CurrencyName == "JPY")
-                    .FirstOrDefault();
+                ChangeFullNameOfClientWithYenAccount(context);
 
-                var clientByAccount = accountInYena?.Owner;
+                await SetClientBirthDates(context);
 
-                if (clientByAccount != null)
-                {
-                    clientByAccount.FullName = "Jason";
-                    await context.SaveChangesAsync();
-                }
+                await context.SaveChangesAsync();
             }
         }
 
-        private static async Task InitializeAsync(DatabaseContext context)
+        private static void Initialize(DatabaseContext context)
         {
             var firstClient = new Client
             {
@@ -77,8 +69,41 @@ namespace EfCoreSandbox
 
             context.Clients.Add(firstClient);
             context.Clients.Add(secondClient);
+        }
 
-            await context.SaveChangesAsync();
+        private static void ChangeFullNameOfClientWithYenAccount(DatabaseContext context)
+        {
+            var accountInYen = context.Accounts
+                                .Include(a => a.Owner)
+                                .ThenInclude(c => c.Accounts)
+                                .Where(a => a.CurrencyName == "JPY")
+                                .FirstOrDefault();
+
+            var clientByAccount = accountInYen?.Owner;
+
+            if (clientByAccount != null)
+            {
+                clientByAccount.FullName = "Jason";
+            }
+        }
+
+        private static async Task SetClientBirthDates(DatabaseContext context)
+        {
+            var r = new Random();
+            int minAge = 21;
+            int maxAge = 35;
+
+            await context.Clients
+                .Where(c => c.DateOfBirth == DateTime.MinValue)
+                .LoadAsync();
+
+            foreach (var client in context.Clients.Where(c => c.DateOfBirth == DateTime.MinValue))
+            {
+                client.DateOfBirth = DateTime.Now
+                    .AddYears(-r.Next(minAge - 1, maxAge))
+                    .AddDays(-r.Next(365))
+                    .Date;
+            }
         }
     }
 }
