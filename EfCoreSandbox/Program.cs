@@ -47,6 +47,7 @@ namespace EfCoreSandbox
             {
                 FullName = "Abc Def",
                 Address = "Hawaii",
+                DateOfBirth = DateTime.Now.AddYears(-35),
                 Accounts = new System.Collections.Generic.List<Account>
                     {
                         new Account
@@ -70,7 +71,8 @@ namespace EfCoreSandbox
             var secondClient = new Client
             {
                 FullName = "Ghi Jkl",
-                Address = "Okinawa"
+                Address = "Okinawa",
+                DateOfBirth = DateTime.Now.AddYears(-21).AddMonths(6).AddDays(-18),
             };
 
             context.Clients.Add(firstClient);

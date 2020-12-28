@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace EfCoreSandbox.Model
@@ -12,6 +13,9 @@ namespace EfCoreSandbox.Model
         public string FullName { get; set; }
 
         public string Address { get; set; }
+
+        [Required]
+        public DateTime DateOfBirth { get; set; }
 
         public List<Account> Accounts { get; set; }
     }
